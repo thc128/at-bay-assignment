@@ -22,6 +22,7 @@ def process(crawl_id):
 
 
 def download_page(url):
+    # TODO - implement this function!!
     try:
         logging.info("Downloading page")
         file_location = ""
