@@ -1,7 +1,6 @@
 # For more information, please refer to https://aka.ms/vscode-docker-python
 FROM python:3.12-slim
 
-EXPOSE 5002
 
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -15,6 +14,8 @@ RUN python -m pip install -r requirements.txt
 
 WORKDIR /app
 COPY . /app
+
+EXPOSE 5002
 
 # Creates a non-root user with an explicit UID and adds permission to access the /app folder
 # For more info, please refer to https://aka.ms/vscode-docker-python-configure-containers
