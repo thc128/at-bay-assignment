@@ -7,8 +7,8 @@ from src.processor import process
 HOST = 'host.docker.internal'
 QUEUE_NAME = 'crawl_requests'
 # TODO - move these variables into a class
-connection = None
-channel = None
+connection_object = None
+channel_object = None
 
 
 def _initialize():
@@ -19,24 +19,25 @@ def _initialize():
 
 
 def get_connection():
-    if connection:
-        return connection
-    return pika.BlockingConnection(pika.ConnectionParameters(HOST))
+    global connection_object
+    if connection_object is None:
+        connection_object = pika.BlockingConnection(pika.ConnectionParameters(HOST))
+    return connection_object
 
 
 @retry(pika.exceptions.AMQPConnectionError, delay=5, jitter=(1, 3))
 def get_channel():
-    if channel:
-        return channel
-    connection = get_connection()
-    return connection.channel()
+    global channel_object
+    if channel_object is None:
+        connection = get_connection()
+        channel_object = connection.channel()
+    return channel_object
 
 
 def callback(ch, method, properties, body):
     logging.info(f"Received {body}")
     process(body.decode())
     
-
 
 def handler():
     channel = get_channel()
