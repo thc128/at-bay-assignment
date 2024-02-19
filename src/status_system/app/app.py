@@ -11,7 +11,6 @@ CRAWL_ID_KEY = "crawl_id"
 def status_handler():
     try:
         crawl_id = request.form[CRAWL_ID_KEY]
-        # TODO - add CRAWL ID validation?
     except KeyError:
         logging.exception("Invalid input")
         return {"status": "Invalid input",
