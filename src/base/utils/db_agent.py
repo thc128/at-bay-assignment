@@ -4,21 +4,25 @@ from pymongo import MongoClient
 
 HOST = "host.docker.internal"
 DB_NAME = "crawls"
-REQUESTS_COLLECTION = "crawling_requests"
+COLLECTION_NAME = "crawling_requests"
 STATUS_KEY = "status"
 RUNNING_STATUS = "RUNNING"
 COMPLETE_STATUS = "COMPLETE"
 collection_object = None
 
-
-def get_collection(collection_name=REQUESTS_COLLECTION):
+def get_collection():
     global collection_object
     if collection_object is None:
         client = MongoClient(HOST)
         db = client[DB_NAME]
-        collection_object = db[collection_name]
+        collection_object = db[COLLECTION_NAME]
     return collection_object
 
+
+def insert_data(data):
+    collection = get_collection()
+    result = collection.insert_one(data)
+    logging.info(f"Inserted object {data}.")
 
 def get_status_update_expression(new_status):
     return {"$set": {STATUS_KEY: new_status}}
@@ -45,4 +49,12 @@ def update_document(filter_expression, update_expression):
     collection = get_collection()
     result = collection.update_one(filter_expression, update_expression)
     logging.info(f"Updated")
+    return result
+
+
+def get_document(id):
+    collection = get_collection()
+    filter_expression = {"crawl_id": id}
+    result = collection.find_one(filter_expression)
+    logging.info(f"Result: {result}.")
     return result

@@ -3,7 +3,7 @@ import json
 import logging
 from retry import retry
 from uuid import uuid4
-from app.db_agent import insert_data
+from utils.db_agent import insert_data
 
 
 HOST = "host.docker.internal"

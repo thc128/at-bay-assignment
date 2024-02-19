@@ -1,22 +1,32 @@
 version: '3.4'
 
 services:
+  base:
+    image: asaf-base
+    build:
+      context: src/base
   message-queue:
     image: rabbitmq
     ports: 
       - 5672:5672
   ingest:
     image: ingest
+    depends_on:
+      - base
     build:
       context: src/ingest_system
     ports:
       - 5002:5002
   process:
     image: process
+    depends_on:
+      - base
     build:
       context: src/process
   status:
     image: status
+    depends_on:
+      - base
     build:
       context: src/status_system
     ports:

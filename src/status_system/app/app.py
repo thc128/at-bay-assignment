@@ -1,6 +1,6 @@
 import logging
 from flask import Flask, request
-from app.db_agent import get_document
+from utils.db_agent import get_document
 
 app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)

@@ -1,6 +1,6 @@
 import json
 import logging
-from src.db_agent import get_document_and_update_status, update_document
+from utils.db_agent import get_document_and_update_status, update_document
 
 
 ERROR_STATUS = "ERROR"
