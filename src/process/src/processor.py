@@ -9,6 +9,7 @@ from utils.mq_agent import get_channel, publish_message
 ERROR_STATUS = "ERROR"
 COMPLETE_STATUS = "COMPLETE"
 DOWNLOADS_BASE_FOLDER = "downloaded_pages"
+NOTIFICATION_TARGETS_KEY = "notification_targets"
 
 
 def process(crawl_id):
@@ -23,9 +24,13 @@ def process(crawl_id):
     final_update_expression = {"$set": {"status": status, "file_location": location}}
     update_document({"crawl_id": crawl_id}, final_update_expression)
     logging.info("DB updated")
+    notification_targets = request_data.get(NOTIFICATION_TARGETS_KEY)
+    if notification_targets is None:
+        return
     message = {"status": status,
                 "crawl_id": crawl_id,
-                "file_location": location}
+                "file_location": location,
+                "notification_targets": notification_targets}
     channel = get_channel(queue_name="notifications")
     publish_message(channel, json.dumps(message), "notifications")
 

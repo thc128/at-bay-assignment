@@ -20,7 +20,6 @@ def handler():
     logging.info("Starting consumer")
     add_consumer(channel, callback, queue="notifications")
     start_consuming(channel)
-    # connection.close()
 
 
 if __name__ == '__main__':

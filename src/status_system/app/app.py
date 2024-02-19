@@ -10,7 +10,8 @@ CRAWL_ID_KEY = "crawl_id"
 @app.route("/status", methods=['POST'])
 def status_handler():
     try:
-        crawl_id = request.form[CRAWL_ID_KEY]
+        request_data = request.get_json(force=True)
+        crawl_id = request_data[CRAWL_ID_KEY]
     except KeyError:
         logging.exception("Invalid input")
         return {"status": "Invalid input",
