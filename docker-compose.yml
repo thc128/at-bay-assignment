@@ -21,6 +21,10 @@ services:
       context: src/status_system
     ports:
       - 5003:5003
+  db:
+    image: mongodb/mongodb-community-server
+    ports:
+      - 27017:27017
   gateway:
     image: gateway
     build: 
