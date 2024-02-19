@@ -31,6 +31,12 @@ services:
       context: src/status_system
     ports:
       - 5003:5003
+  notifier:
+    image: notifier
+    depends_on:
+      - base
+    build:
+      context: src/notifier
   db:
     image: mongodb/mongodb-community-server
     ports:

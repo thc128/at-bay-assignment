@@ -25,17 +25,19 @@ def get_channel(queue_name=QUEUE_NAME):
     if channel_object is None:
         connection = get_connection()
         channel_object = connection.channel()
-        channel_object.queue_declare(queue=queue_name)
     return channel_object
 
 
 def publish_message(channel, message, queue=QUEUE_NAME):
+    channel.queue_declare(queue=queue)
     channel.basic_publish(exchange='',
                             routing_key=queue,
                             body=message)
+    logging.info("Message published")
 
 
 def add_consumer(channel, callback_function, queue=QUEUE_NAME):
+    channel.queue_declare(queue=queue)
     channel.basic_consume(queue=queue,
                         auto_ack=True,
                         on_message_callback=callback_function)
