@@ -1,0 +1,46 @@
+version: '3.4'
+
+services:
+  message-queue:
+    image: rabbitmq
+    ports: 
+      - 5672:5672
+  ingest:
+    image: ingest
+    build:
+      context: src/ingest_system
+    ports:
+      - 5002:5002
+  process:
+    image: process
+    build:
+      context: src/process
+  status:
+    image: status
+    build:
+      context: src/status_system
+    ports:
+      - 5003:5003
+  gateway:
+    image: gateway
+    build: 
+      context: src/gateway
+    environment:
+      - KONG_PREFIX=/var/run/kong
+      - KONG_DATABASE=off
+      - KONG_DECLARATIVE_CONFIG=/var/run/kong/kong.yml
+      - KONG_PROXY_ACCESS_LOG=/dev/stdout
+      - KONG_ADMIN_ACCESS_LOG=/dev/stdout
+      - KONG_PROXY_ERROR_LOG=/dev/stderr
+      - KONG_ADMIN_ERROR_LOG=/dev/stderr
+      - KONG_ADMIN_LISTEN=0.0.0.0:8001
+      - KONG_ADMIN_GUI_URL=http://localhost:8002
+    ports:
+      - 8000:8000 
+      - 8001:8001 
+      - 8002:8002 
+      - 8003:8003 
+      - 8004:8004 
+      - 8443:8443 
+      - 8444:8444 
+      - 8445:8445 
