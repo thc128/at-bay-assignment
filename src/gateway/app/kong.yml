@@ -1,0 +1,23 @@
+_format_version: "3.0"
+_transform: true
+
+services:
+- name: ingest_service
+  host: host.docker.internal
+  port: 5002
+  protocol: http
+  path: /ingest
+  routes:
+  - name: ingest_route
+    paths:
+    - /ingest
+
+- name: status_service
+  host: host.docker.internal
+  port: 5003
+  protocol: http
+  path: /status
+  routes:
+  - name: status_route
+    paths:
+    - /status
