@@ -12,7 +12,6 @@ REQUEST_KEY = "url"
 def base():
     try:
         url = request.form[REQUEST_KEY]
-        # TODO - add URL form validation?
     except KeyError:
         logging.exception("Invalid input")
         return {"status": "Invalid input", "message": "should include URL in the body"}, 400
