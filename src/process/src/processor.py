@@ -12,7 +12,7 @@ from utils.constants import ERROR_STATUS, COMPLETE_STATUS,\
 def process(crawl_id):
     logging.info(f"Processing {crawl_id}")
     db_agent = DBAgent()
-    request_data = db_agent.get_document_and_update_status({"crawl_id": crawl_id})
+    request_data = db_agent.get_document_and_update_status(crawl_id)
     if request_data is None:
         logging.warning("Did not find relevant data")
         return
@@ -20,7 +20,7 @@ def process(crawl_id):
     download_status, location = download_page(request_data.get("url"), crawl_id)
     status = COMPLETE_STATUS if download_status else ERROR_STATUS
     final_update_expression = {"$set": {"status": status, "file_location": location}}
-    db_agent.update_document({"crawl_id": crawl_id}, final_update_expression)
+    db_agent.update_document(crawl_id, final_update_expression)
     logging.info("DB updated")
     notification_targets = request_data.get(NOTIFICATION_TARGETS_KEY)
     if notification_targets is None:
