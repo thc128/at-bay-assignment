@@ -2,18 +2,18 @@ import json
 import logging
 from flask import Flask, request
 from app.ingestor import ingest
+from utils.constants import URL_KEY, NOTIFICATION_TARGETS_KEY
 
 
 app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
-REQUEST_KEY = "url"
-NOTIFICATION_TARGETS_KEY = "notification_targets"
+
 
 @app.route("/ingest", methods=['POST'])
 def base():
     try:
         request_data = request.get_json(force=True)
-        url = request_data[REQUEST_KEY]
+        url = request_data[URL_KEY]
         notification_targets = request_data.get(NOTIFICATION_TARGETS_KEY)
     except KeyError:
         logging.exception("Invalid input")

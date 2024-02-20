@@ -1,9 +1,7 @@
 import logging
 from src.processor import process
 from utils.mq_agent import MessageQueueAgent
-
-
-CRAWL_REQUESTS_QUEUE = "crawl_requests"
+from utils.constants import CRAWL_REQUESTS_QUEUE
 
 
 def _initialize():

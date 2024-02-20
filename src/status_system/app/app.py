@@ -1,10 +1,11 @@
 import logging
 from flask import Flask, request
 from utils.db_agent import DBAgent
+from utils.constants import CRAWL_ID_KEY
+
 
 app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
-CRAWL_ID_KEY = "crawl_id"
 
 
 @app.route("/status", methods=['POST'])

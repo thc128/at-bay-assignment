@@ -1,6 +1,7 @@
 import logging
 from src.notifier import notify
 from utils.mq_agent import MessageQueueAgent
+from utils.constants import NOTIFICATIONS_QUEUE
 
 
 def _initialize():
@@ -18,7 +19,7 @@ def callback(ch, method, properties, body):
 def handler():
     mq_agent = MessageQueueAgent()
     logging.info("Starting consumer")
-    mq_agent.add_consumer(callback, queue="notifications")
+    mq_agent.add_consumer(callback, queue=NOTIFICATIONS_QUEUE)
     mq_agent.start_consuming()
 
 

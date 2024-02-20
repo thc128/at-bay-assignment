@@ -2,11 +2,9 @@ import logging
 from uuid import uuid4
 from utils.db_agent import DBAgent
 from utils.mq_agent import MessageQueueAgent
+from utils.constants import ACCEPTED_STATUS, NOTIFICATION_TARGETS_KEY,\
+                            CRAWL_REQUESTS_QUEUE
 
-
-ACCEPTED_STATUS = "ACCEPTED"
-NOTIFICATION_TARGETS_KEY = "notification_targets"
-CRAWL_REQUESTS_QUEUE = "crawl_requests"
 
 def ingest(url, notification_targets):
     crawl_id = get_crawl_id()

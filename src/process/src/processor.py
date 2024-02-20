@@ -4,12 +4,9 @@ import requests
 import os
 from utils.db_agent import DBAgent
 from utils.mq_agent import MessageQueueAgent
-
-
-ERROR_STATUS = "ERROR"
-COMPLETE_STATUS = "COMPLETE"
-DOWNLOADS_BASE_FOLDER = "downloaded_pages"
-NOTIFICATION_TARGETS_KEY = "notification_targets"
+from utils.constants import ERROR_STATUS, COMPLETE_STATUS,\
+                            DOWNLOADS_BASE_FOLDER, NOTIFICATION_TARGETS_KEY,\
+                            NOTIFICATIONS_QUEUE
 
 
 def process(crawl_id):
@@ -33,7 +30,7 @@ def process(crawl_id):
                 "file_location": location,
                 "notification_targets": notification_targets}
     mq_agent = MessageQueueAgent()
-    mq_agent.publish_message(json.dumps(message), "notifications")
+    mq_agent.publish_message(json.dumps(message), NOTIFICATIONS_QUEUE)
 
 def download_page(url, id):
     try:

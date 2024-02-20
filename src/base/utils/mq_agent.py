@@ -1,9 +1,7 @@
 import pika
 import logging
 from retry import retry
-
-
-HOST = "host.docker.internal"
+from utils.constants import HOST
 
 
 class MessageQueueAgent():
