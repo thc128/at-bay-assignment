@@ -1,5 +1,6 @@
 [![wakatime statistics](https://wakatime.com/badge/user/5ed747b7-0463-4306-99b1-0bf97d1aaa33/project/018dbbf1-65bd-41cc-9680-84d7ad8b4c72.svg)](https://wakatime.com/badge/user/5ed747b7-0463-4306-99b1-0bf97d1aaa33/project/018dbbf1-65bd-41cc-9680-84d7ad8b4c72)
 
+# How To Run
 For running this project:
 1. Clone this repository
 ```
@@ -29,3 +30,6 @@ Example JSON body:
 }
 ```
 ![second_request](second_request.png)
+
+# System Design
+![design](system_design.jpg)
