@@ -3,7 +3,7 @@ import logging
 import requests
 import os
 from utils.db_agent import get_document_and_update_status, update_document
-from utils.mq_agent import get_channel, publish_message
+from utils.mq_agent import MessageQueueAgent
 
 
 ERROR_STATUS = "ERROR"
@@ -31,8 +31,8 @@ def process(crawl_id):
                 "crawl_id": crawl_id,
                 "file_location": location,
                 "notification_targets": notification_targets}
-    channel = get_channel(queue_name="notifications")
-    publish_message(channel, json.dumps(message), "notifications")
+    mq_agent = MessageQueueAgent()
+    mq_agent.publish_message(json.dumps(message), "notifications")
 
 def download_page(url, id):
     try:

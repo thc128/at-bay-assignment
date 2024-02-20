@@ -1,6 +1,9 @@
 import logging
 from src.processor import process
-from utils.mq_agent import get_channel, add_consumer, start_consuming
+from utils.mq_agent import MessageQueueAgent
+
+
+CRAWL_REQUESTS_QUEUE = "crawl_requests"
 
 
 def _initialize():
@@ -16,11 +19,10 @@ def callback(ch, method, properties, body):
 
 
 def handler():
-    channel = get_channel()
+    mq_agent = MessageQueueAgent()
     logging.info("Starting consumer")
-    add_consumer(channel, callback)
-    start_consuming(channel)
-    # connection.close()
+    mq_agent.add_consumer(callback, CRAWL_REQUESTS_QUEUE)
+    mq_agent.start_consuming()
 
 
 if __name__ == '__main__':
