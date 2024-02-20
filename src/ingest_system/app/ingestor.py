@@ -1,6 +1,6 @@
 import logging
 from uuid import uuid4
-from utils.db_agent import insert_data
+from utils.db_agent import DBAgent
 from utils.mq_agent import MessageQueueAgent
 
 
@@ -18,7 +18,8 @@ def ingest(url, notification_targets):
                     "status": ACCEPTED_STATUS}
     if notification_targets is not None:
         request_data[NOTIFICATION_TARGETS_KEY] = notification_targets
-    insert_data(request_data)
+    db_agent = DBAgent()
+    db_agent.insert_data(request_data)
     logging.info("Inserted to db")
     return crawl_id
 

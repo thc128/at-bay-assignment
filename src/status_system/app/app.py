@@ -1,6 +1,6 @@
 import logging
 from flask import Flask, request
-from utils.db_agent import get_document
+from utils.db_agent import DBAgent
 
 app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -28,7 +28,8 @@ def status_handler():
 
 
 def get_response(id):
-    result = get_document(id)
+    db_agent = DBAgent()
+    result = db_agent.get_document(id)
     status = "NOT_FOUND" if result is None else result.get("status")
     response = {"status": status, "crawl_id": id}
     if status == "COMPLETE":
